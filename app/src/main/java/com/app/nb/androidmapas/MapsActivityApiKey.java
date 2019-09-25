@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMarkerDragListener {
 
     private GoogleMap mMap;
 
@@ -43,6 +43,12 @@ public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCa
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+        // click sobre el mapa
+        mMap.setOnMapClickListener(this);
+
+        // eventos markers
+        mMap.setOnMarkerDragListener(this);
 
         // Add a marker in Sydney and move the camera
         LatLng lima = new LatLng(-12.04318, -77.02824);
@@ -72,5 +78,31 @@ public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCa
             Log.e("Map", "Can't find style. Error: ", e);
         }
 
+    }
+
+    @Override
+    public void onMapClick(LatLng latLng) {
+        mMap.addMarker(
+                new MarkerOptions().position(latLng)
+                        .title("Nuevo Marker")
+                        .draggable(true)
+        );
+    }
+
+    @Override
+    public void onMarkerDragStart(Marker marker) {
+        marker.hideInfoWindow();
+    }
+
+    @Override
+    public void onMarkerDrag(Marker marker) {
+
+    }
+
+    @Override
+    public void onMarkerDragEnd(Marker marker) {
+        LatLng position = marker.getPosition();
+        marker.setSnippet(position.latitude + "," + position.longitude);
+        marker.showInfoWindow();
     }
 }
