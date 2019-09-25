@@ -87,6 +87,8 @@ public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCa
                         .title("Nuevo Marker")
                         .draggable(true)
         );
+
+        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
     }
 
     @Override
