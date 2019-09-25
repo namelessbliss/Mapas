@@ -10,8 +10,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCallback {
@@ -43,9 +45,16 @@ public class MapsActivityApiKey extends FragmentActivity implements OnMapReadyCa
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-12.04318, -77.02824);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng lima = new LatLng(-12.04318, -77.02824);
+        Marker markerLima = mMap.addMarker(new MarkerOptions()
+                .position(lima)
+                .title("Lima")
+                .snippet("Ciudad de Lima")
+                .draggable(true)
+                //.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_MAGENTA))
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.marker))
+        );
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(lima));
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
